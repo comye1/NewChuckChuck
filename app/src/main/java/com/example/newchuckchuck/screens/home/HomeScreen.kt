@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun HomeScreen() {
@@ -72,12 +73,13 @@ fun SubjectSection() {
             ) {
                 Text(text = "과목명", style = MaterialTheme.typography.h6)
             }
-            Row(
+            FlowRow(
                 modifier = Modifier
                     .height(100.dp)
                     .padding(10.dp)
             ) {
                 keyWords.forEach {
+                    // Todo: 키워드 composable 만들기
                     Text(text = it, style = MaterialTheme.typography.body2)
                     Spacer(modifier = Modifier.width(5.dp))
                 }
