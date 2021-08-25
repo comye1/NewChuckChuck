@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.newchuckchuck.ui.theme.DeepGreen
 
 @Composable
 fun BottomNavigationBar(
@@ -28,7 +29,7 @@ fun BottomNavigationBar(
 
     BottomNavigation(
         modifier = modifier,
-        backgroundColor = Color(0, 102, 51),
+        backgroundColor = DeepGreen,
         elevation = 5.dp
     ) {
         items.forEach { item ->

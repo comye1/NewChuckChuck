@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.newchuckchuck.navigation.BottomNavItem
 import com.example.newchuckchuck.navigation.BottomNavigationBar
 import com.example.newchuckchuck.navigation.Navigation
+import com.example.newchuckchuck.ui.theme.DeepGreen
 import com.example.newchuckchuck.ui.theme.NewChuckChuckTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewChuckChuckTheme {
-                window.statusBarColor = Color(0, 102, 51).toArgb()
+                window.statusBarColor = DeepGreen.toArgb()
                 val navController = rememberNavController()
 
                 Scaffold(
