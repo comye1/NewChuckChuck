@@ -1,11 +1,14 @@
 package com.example.newchuckchuck.screens.home
 
+import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
@@ -14,20 +17,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.newchuckchuck.getDateString
 import com.example.newchuckchuck.ui.theme.DeepGreen
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun HomeScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(text = "Home screen", style = MaterialTheme.typography.h5)
-            Spacer(modifier = Modifier.height(10.dp))
-            LazyColumn() {
+    // todo : 태블릿 위한 레이아웃 어떻게 ??
+    Column(modifier = Modifier.padding(20.dp)) {
+        Text(text = "Home screen 뭐라고 쓸까~~", style = MaterialTheme.typography.h5)
+        Text(text = getDateString(), style = MaterialTheme.typography.body2)
+        Spacer(modifier = Modifier.height(10.dp))
+        LazyColumn() {
+            item {
+                SubjectSection()
+            }
                 item {
                     SubjectSection()
                 }
@@ -43,12 +49,8 @@ fun HomeScreen() {
                 item {
                     SubjectSection()
                 }
-                item {
-                    SubjectSection()
-                }
-                item {
-                    Spacer(modifier = Modifier.height(40.dp))
-                }
+            item {
+                Spacer(modifier = Modifier.height(40.dp))
             }
         }
     }
@@ -66,7 +68,7 @@ fun SubjectSection() {
     }
 
 
-    Card(elevation = 10.dp) {
+    Card(elevation = 10.dp, shape = RoundedCornerShape(15.dp)) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(
                 modifier = Modifier
@@ -75,12 +77,12 @@ fun SubjectSection() {
                     .wrapContentHeight(align = CenterVertically)
                     .padding(10.dp)
             ) {
-                Text(text = "과목명", style = MaterialTheme.typography.h6)
+                Text(text = "과목명", style = MaterialTheme.typography.subtitle1)
             }
             FlowRow(
                 modifier = Modifier
-                    .height(100.dp)
-                    .padding(10.dp)
+                    .wrapContentHeight()
+                    .padding(5.dp)
             ) {
                 keyWords.forEach {
                     KeyWord(text = it)
@@ -90,23 +92,33 @@ fun SubjectSection() {
                 verticalAlignment = CenterVertically,
                 modifier = Modifier.padding(10.dp)
             ) {
-                TextField(
+                OutlinedTextField(
                     value = newText,
                     onValueChange = { newText = it },
-                    placeholder = {Text(text = "키워드")},
-                    colors = TextFieldDefaults.textFieldColors(
-//                        focusedBorderColor = DeepGreen,
-//                        unfocusedBorderColor = Color.LightGray,
+                    placeholder = { Text(text = "키워드") },
+                    textStyle = MaterialTheme.typography.body1,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = DeepGreen,
+                        unfocusedBorderColor = Color.LightGray,
 
                         cursorColor = DeepGreen,
                         backgroundColor = Color.White,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.White,
-                        disabledIndicatorColor = Color.Transparent
+//                        focusedIndicatorColor = Color.Transparent,
+//                        unfocusedIndicatorColor = Color.White,
+//                        disabledIndicatorColor = Color.Transparent
                     ),
-                    modifier = Modifier.weight(1f).border(1.dp, DeepGreen, CircleShape),
-                    shape = CircleShape
-                ) //Todo: 한줄 입력, 키보드 엔터 동작
+                    shape = CircleShape,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyWords.add(newText)
+                            newText = ""
+                        }
+                    )
+                )
                 Spacer(modifier = Modifier.width(10.dp))
                 IconButton(
                     onClick = {
@@ -130,7 +142,8 @@ fun SubjectSection() {
 @Composable
 fun KeyWord(text: String) {
     Surface(modifier = Modifier.padding(5.dp), shape = CircleShape) {
-        Text(text = text,
+        Text(
+            text = text,
             Modifier
 //                .background(color = Color.LightGray)
                 .border(width = 1.dp, color = DeepGreen, shape = CircleShape)
