@@ -90,6 +90,7 @@ fun SubjectSection() {
             }
             Row(
                 verticalAlignment = CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.padding(10.dp)
             ) {
                 OutlinedTextField(
@@ -124,6 +125,7 @@ fun SubjectSection() {
                     onClick = {
                         keyWords.add(newText)
                         newText = ""
+                        //todo: 유효성 검증
                     },
                     modifier = Modifier.fillMaxHeight()
                 ) {

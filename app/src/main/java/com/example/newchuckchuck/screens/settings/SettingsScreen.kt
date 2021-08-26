@@ -59,6 +59,16 @@ fun SubjectItem() {
     var showDialog by remember {
         mutableStateOf(false)
     }
+
+    var name by remember {
+        mutableStateOf("")
+    }
+
+
+    var checkedState = remember {
+        mutableStateOf(false)
+    }
+
     if (showDialog) {
         //todo : custom dialog 만들기 (TextField, Checkbox 포함)
         AlertDialog(
@@ -67,7 +77,14 @@ fun SubjectItem() {
                 Text(text = "수정")
             },
             text = {
-                Text("안뇽")
+                Column() {
+                    TextField(value = name, onValueChange = { name = it })
+                    Checkbox(
+                        checked = checkedState.value,
+                        onCheckedChange = { checkedState.value = it }
+                    )
+
+                }
             },
             confirmButton = {
                 IconButton(onClick = { showDialog = false }) {
