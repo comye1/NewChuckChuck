@@ -4,11 +4,11 @@ package com.example.newchuckchuck
 import java.util.*
 
 fun getDateString(): String {
-    val cal =  Calendar.getInstance()
+    val cal = Calendar.getInstance()
     val year = cal.get(Calendar.YEAR)
     val month = cal.get(Calendar.MONTH) + 1
     val date = cal.get(Calendar.DATE)
-    val day = when(cal.get(Calendar.DAY_OF_WEEK)){
+    val day = when (cal.get(Calendar.DAY_OF_WEEK)) {
 
         1 -> "일"
         2 -> "월"
@@ -22,3 +22,11 @@ fun getDateString(): String {
     return "${year}년 ${month}월 ${date}일 ${day}요일"
 }
 
+fun getDateInt(): Int {
+    val cal = Calendar.getInstance()
+    val year = cal.get(Calendar.YEAR)
+    val month = cal.get(Calendar.MONTH) + 1
+    val date = cal.get(Calendar.DATE)
+
+    return year * 10000 + month * 100 + date
+}

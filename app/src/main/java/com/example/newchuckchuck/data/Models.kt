@@ -3,29 +3,58 @@ package com.example.newchuckchuck.data
 import androidx.room.*
 import java.text.DateFormat
 
-@Entity(tableName = "note_table")
+@Entity
 data class Note(
-    @PrimaryKey(autoGenerate = true) val noteId: Long = 0L,
-    val title: String,
-    val days: String
-){
-    val modifiedDate: String
-        get() = DateFormat.getDateTimeInstance().format(System.currentTimeMillis())
-}
-
-@Entity(tableName = "keyword_table")
-data class Keyword(
-    @PrimaryKey(autoGenerate = true) val keywordId: Long = 0L,
-    val ownerNoteId: Long,
-    val word: String,
-    val description: String
+    @PrimaryKey(autoGenerate = true) val noteId: Int? = 0,
+    val noteTitle: String?,
+    val days: String?,
+    val updatedAt: Long? // Note 정렬 용도
 )
 
-data class NoteWithKeywords(
-    @Embedded val note: Note,
+@Entity
+data class Page(
+    @PrimaryKey(autoGenerate = true) val pageId: Int? = 0,
+    val pageTitle: String?,
+    val createdAt: Int?,
+    val byTT: Boolean? = false
+)
+
+data class NoteWithPages(
+    @Embedded val note: Note?,
     @Relation(
         parentColumn = "noteId",
+        entityColumn = "pageId"
+    )
+    val keywords: List<Page?>
+)
+
+@Entity
+data class Keyword(
+    @PrimaryKey(autoGenerate = true) val keywordId: Int? = 0,
+    val ownerNoteId: Int?,
+    val word: String?,
+    val description: String?
+)
+
+data class PageWithKeywords(
+    @Embedded val note: Note?,
+    @Relation(
+        parentColumn = "pageId",
         entityColumn = "keywordId"
     )
-    val keywords: List<Keyword>
+    val keywords: List<Keyword?>
+)
+
+data class KeywordImage(
+    @PrimaryKey val imgNameId: Int? = 0,
+    val ownerKeywordId: Int?
+)
+
+data class KeywordWithImages(
+    @Embedded val keyword:Keyword?,
+    @Relation(
+        parentColumn = "keywordId",
+        entityColumn = "imgNameId"
+    )
+    val keywordImages: List<KeywordImage?>
 )
