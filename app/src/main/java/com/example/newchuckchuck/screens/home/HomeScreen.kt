@@ -1,12 +1,10 @@
 package com.example.newchuckchuck.screens.home
 
-import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -19,45 +17,51 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.newchuckchuck.data.Note
 import com.example.newchuckchuck.getDateString
 import com.example.newchuckchuck.ui.theme.DeepGreen
+import com.example.newchuckchuck.ui.theme.LightGreen
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun HomeScreen() {
     // todo : 태블릿 위한 레이아웃 어떻게 ??
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text(text = "Home screen 뭐라고 쓸까~~", style = MaterialTheme.typography.h5)
-        Text(text = getDateString(), style = MaterialTheme.typography.body2)
-        Spacer(modifier = Modifier.height(10.dp))
-        LazyColumn() {
-            item {
-                SubjectSection()
-            }
+    Surface(color = MaterialTheme.colors.surface) {
+
+        Column() {
+            Text(text = "Home screen 뭐라고 쓸까~~", style = MaterialTheme.typography.h5)
+            Text(text = getDateString(), style = MaterialTheme.typography.body2)
+            Spacer(modifier = Modifier.height(10.dp))
+            LazyColumn() {
                 item {
-                    SubjectSection()
+                    NoteItem()
                 }
                 item {
-                    SubjectSection()
+                    NoteItem()
                 }
                 item {
-                    SubjectSection()
+                    NoteItem()
                 }
                 item {
-                    SubjectSection()
+                    NoteItem()
                 }
                 item {
-                    SubjectSection()
+                    NoteItem()
                 }
-            item {
-                Spacer(modifier = Modifier.height(40.dp))
+                item {
+                    NoteItem()
+                }
+                item {
+                    Spacer(modifier = Modifier.height(40.dp))
+                }
             }
         }
     }
+
 }
 
 @Composable
-fun SubjectSection() {
+fun NoteItem() {
 
     var newText by remember {
         mutableStateOf("")
@@ -67,18 +71,23 @@ fun SubjectSection() {
         mutableStateListOf("키움", "기아", "삼성", "롯데")
     }
 
-
-    Card(elevation = 10.dp, shape = RoundedCornerShape(15.dp)) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+    Card() {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+//            .background(color = MaterialTheme.colors.surface)
+        ) {
             Row(
                 modifier = Modifier
-                    .background(color = Color.LightGray)
-                    .fillMaxWidth()
                     .wrapContentHeight(align = CenterVertically)
                     .padding(10.dp)
             ) {
-                Text(text = "과목명", style = MaterialTheme.typography.subtitle1)
+                Text(
+                    text = "과목명",
+                    style = MaterialTheme.typography.h6
+                )
             }
+            Divider(modifier = Modifier.padding(horizontal = 10.dp), color = Color.Gray)
             FlowRow(
                 modifier = Modifier
                     .wrapContentHeight()
@@ -90,8 +99,10 @@ fun SubjectSection() {
             }
             Row(
                 verticalAlignment = CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(10.dp)
+//            horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
             ) {
                 OutlinedTextField(
                     value = newText,
@@ -108,7 +119,7 @@ fun SubjectSection() {
 //                        unfocusedIndicatorColor = Color.White,
 //                        disabledIndicatorColor = Color.Transparent
                     ),
-                    shape = CircleShape,
+//                shape = CircleShape,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
@@ -120,37 +131,52 @@ fun SubjectSection() {
                         }
                     )
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+//            Spacer(modifier = Modifier.width(10.dp))
                 IconButton(
                     onClick = {
                         keyWords.add(newText)
                         newText = ""
                         //todo: 유효성 검증
                     },
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.AddCircle,
                         contentDescription = "add",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .size(50.dp)
+                            .weight(1f),
+                        tint = DeepGreen
                     )
                 }
             }
         }
     }
-    Spacer(modifier = Modifier.height(20.dp))
+
 }
 
 @Composable
 fun KeyWord(text: String) {
-    Surface(modifier = Modifier.padding(5.dp), shape = CircleShape) {
-        Text(
-            text = text,
-            Modifier
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
 //                .background(color = Color.LightGray)
-                .border(width = 1.dp, color = DeepGreen, shape = CircleShape)
-                .padding(horizontal = 10.dp, vertical = 5.dp)
+            .padding(horizontal = 5.dp, vertical = 10.dp)
+            .border(width = 1.dp, color = Color.LightGray, shape = CircleShape)
+            .padding(5.dp)
+
+    ) {
+        Text(
+            text = text
         )
+
     }
 }
 
+@Composable
+fun NoteItem(
+    note: Note,
+    folded: Boolean = true
+) {
+
+}
