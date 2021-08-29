@@ -40,12 +40,12 @@ interface NoteDao {
 
    //Transaction
     @Query("SELECT * FROM note where noteId = :noteId")
-    suspend fun getNoteWithPages(noteId: Int): LiveData<List<Page?>>
+    suspend fun getNoteWithPages(noteId: Int): List<NoteWithPages>
 
     @Query("SELECT * FROM page where pageId = :pageId")
-    suspend fun getPageWithKeywords(pageId: Int): LiveData<List<Keyword?>>
+    suspend fun getPageWithKeywords(pageId: Int): List<PageWithKeywords>
 
     @Query("SELECT * FROM keyword where keywordId =:keywordId")
-    suspend fun getKeywordWithImages(keywordId: Int): LiveData<List<KeywordImage?>>
+    suspend fun getKeywordWithImages(keywordId: Int): List<KeywordWithImages>
     
 }

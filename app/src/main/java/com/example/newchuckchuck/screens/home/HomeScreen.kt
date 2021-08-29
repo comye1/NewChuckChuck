@@ -1,20 +1,25 @@
 package com.example.newchuckchuck.screens.home
 
+import android.widget.Space
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.newchuckchuck.data.Note
@@ -68,30 +73,52 @@ fun NoteItem() {
     }
 
     var keyWords = remember {
-        mutableStateListOf("키움", "기아", "삼성", "롯데")
+        mutableStateListOf("키움히어로즈", "기아", "삼성", "롯데")
     }
 
-    Card() {
+    Card(
+        modifier = Modifier.padding(10.dp),
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(width = 3.dp, color = Color.LightGray)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(10.dp)
 //            .background(color = MaterialTheme.colors.surface)
         ) {
             Row(
                 modifier = Modifier
                     .wrapContentHeight(align = CenterVertically)
-                    .padding(10.dp)
             ) {
+//                Icon(imageVector = Icons.Outlined.Notes, contentDescription = "", tint = DeepGreen)
+//                Spacer(modifier = Modifier.width(5.dp))
                 Text(
-                    text = "과목명",
-                    style = MaterialTheme.typography.h6
+                    text = "프로야구",
+                    style = MaterialTheme.typography.h6,
+                    fontWeight = FontWeight.ExtraBold,
+//                    color = DeepGreen
                 )
             }
-            Divider(modifier = Modifier.padding(horizontal = 10.dp), color = Color.Gray)
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Label,
+                    tint = Color.DarkGray,
+                    contentDescription = "",
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(5.dp))
+                Text(
+                    text = "소제목입니다 키움 너무못해",
+                    style = MaterialTheme.typography.subtitle1
+                )
+            }
+
             FlowRow(
                 modifier = Modifier
                     .wrapContentHeight()
-                    .padding(5.dp)
             ) {
                 keyWords.forEach {
                     KeyWord(text = it)
@@ -99,10 +126,10 @@ fun NoteItem() {
             }
             Row(
                 verticalAlignment = CenterVertically,
-//            horizontalArrangement = Arrangement.SpaceAround,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp)
+                    .padding(vertical = 10.dp)
             ) {
                 OutlinedTextField(
                     value = newText,
@@ -119,7 +146,7 @@ fun NoteItem() {
 //                        unfocusedIndicatorColor = Color.White,
 //                        disabledIndicatorColor = Color.Transparent
                     ),
-//                shape = CircleShape,
+                shape = CircleShape,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
@@ -134,6 +161,7 @@ fun NoteItem() {
 //            Spacer(modifier = Modifier.width(10.dp))
                 IconButton(
                     onClick = {
+                        // 뷰모델 addNewKeyword 호출
                         keyWords.add(newText)
                         newText = ""
                         //todo: 유효성 검증
@@ -141,7 +169,7 @@ fun NoteItem() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.AddCircle,
+                        imageVector = Icons.Outlined.Add,
                         contentDescription = "add",
                         modifier = Modifier
                             .size(50.dp)
@@ -158,18 +186,19 @@ fun NoteItem() {
 @Composable
 fun KeyWord(text: String) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = CenterVertically,
         modifier = Modifier
 //                .background(color = Color.LightGray)
-            .padding(horizontal = 5.dp, vertical = 10.dp)
-            .border(width = 1.dp, color = Color.LightGray, shape = CircleShape)
-            .padding(5.dp)
+            .padding(vertical = 5.dp)
 
     ) {
         Text(
-            text = text
+            text = text,
+            modifier = Modifier
+                .border(width = 1.dp, color = DeepGreen, shape = CircleShape)
+                .padding(vertical = 5.dp, horizontal = 10.dp)
         )
-
+        Spacer(modifier = Modifier.width(5.dp))
     }
 }
 
