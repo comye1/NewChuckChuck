@@ -33,7 +33,8 @@ data class Keyword(
     @PrimaryKey(autoGenerate = true) val keywordId: Int? = 0,
     val ownerNoteId: Int?,
     val word: String?,
-    val description: String?
+    val description: String?,
+    val imgCount: Int = 0
 )
 
 data class PageWithKeywords(
