@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
@@ -71,39 +70,14 @@ fun SubjectItem() {
 
     if (showDialog) {
         //todo : custom dialog 만들기 (TextField, Checkbox 포함)
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = {
-                Text(text = "수정")
-            },
-            text = {
-                Column() {
-                    TextField(value = name, onValueChange = { name = it })
-                    Checkbox(
-                        checked = checkedState.value,
-                        onCheckedChange = { checkedState.value = it }
-                    )
-
-                }
-            },
-            confirmButton = {
-                IconButton(onClick = { showDialog = false }) {
-                    Icon(
-                        imageVector = Icons.Default.Done,
-                        contentDescription = "complete"
-                    )
-                }
-            },
-            dismissButton = {
-                IconButton(onClick = { showDialog = false }) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "cancel"
-                    )
-
-                }
-            }
+        TimeTableDialog(
+            subjectName = name,
+            setSubjectName = { subName: String -> name = subName },
+            checkedState = checkedState,
+            closeDialog = { showDialog = false },
+            saveTimeTable = {}
         )
+
     }
     Column(
         Modifier
@@ -114,5 +88,56 @@ fun SubjectItem() {
         Text(text = "과목명", modifier = Modifier.padding(10.dp))
         Divider()
     }
+}
+
+@Composable
+fun TimeTableDialog(
+    subjectName: String,
+    closeDialog: () -> Unit,
+    saveTimeTable: () -> Unit,
+    checkedState: MutableState<Boolean>,
+    setSubjectName: (String) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest ={closeDialog()},
+        title = {
+            Text(text = "수정")
+        },
+        text = {
+            Column {
+                TextField(
+                    value = subjectName,
+                    onValueChange = {
+                        setSubjectName(it)
+                    }
+                )
+                Checkbox(
+                    checked = checkedState.value,
+                    onCheckedChange = { checkedState.value = it }
+                )
+
+            }
+        },
+        confirmButton = {
+            IconButton(onClick = {
+                closeDialog()
+                saveTimeTable()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Done,
+                    contentDescription = "complete"
+                )
+            }
+        },
+        dismissButton = {
+            IconButton(onClick = closeDialog) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "cancel"
+                )
+
+            }
+        }
+    )
 }
 
