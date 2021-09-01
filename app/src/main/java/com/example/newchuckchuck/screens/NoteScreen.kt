@@ -1,7 +1,6 @@
 package com.example.newchuckchuck.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,17 +8,17 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.sharp.Image
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 
 
 @Composable
@@ -83,7 +82,7 @@ fun NoteScreen(noteId: Int?, navController: NavHostController) {
             }
         )
     }) {
-        Column() {
+        Column {
             PageItem()
         }
     }
@@ -102,7 +101,12 @@ fun PageItem() {
                 .padding(10.dp)
         ) {
             PageTitle(title = "210831")
-            PageKeywordItem()
+            PageKeywordItem(1)
+            PageKeywordItem(0)
+            PageKeywordItem(0)
+            PageKeywordItem(2)
+            PageKeywordItem(3)
+            PageKeywordItem(0)
         }
 
     }
@@ -136,55 +140,84 @@ fun PageTitle(title: String) {
 }
 
 @Composable
-fun PageKeywordItem() {
-    val folded = remember {
-        mutableStateOf(true)
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-    ) {
-        Row(
+fun PageKeywordItem(imgCount: Int) {
+//    val folded = remember {
+//        mutableStateOf(true)
+//    }
+//    Column(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(10.dp)
+//    ) {
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .clickable {
+//                    folded.value = !folded.value
+//                }
+//                .padding(5.dp),
+//            horizontalArrangement = Arrangement.SpaceBetween,
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            Text("keyword", style = MaterialTheme.typography.body1)
+//            if (folded.value) {
+//                Icon(imageVector = Icons.Outlined.ExpandMore, contentDescription = "unfold")
+//            } else {
+//                Icon(imageVector = Icons.Outlined.ExpandLess, contentDescription = "fold")
+//            }
+//        }
+//        if (!folded.value) {
+//            KeywordDescription()
+//        }
+//        }
+    Row(modifier = Modifier.padding(5.dp)) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(if (imgCount > 0) 0.8f else 1f)
                 .clickable {
-                    folded.value = !folded.value
+
                 }
-                .padding(5.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("keyword", style = MaterialTheme.typography.body1)
-            if (folded.value) {
-                Icon(imageVector = Icons.Outlined.ExpandMore, contentDescription = "unfold")
-            } else {
-                Icon(imageVector = Icons.Outlined.ExpandLess, contentDescription = "fold")
+            Text(
+                "keyword what what",
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.Bold
+            )
+            Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+        }
+        if (imgCount > 0) {
+            IconButton(
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Top)
+            ) {
+                Icon(
+                    imageVector = Icons.Sharp.Image,
+                    contentDescription = "",
+                    tint = Color.DarkGray,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
-        if (!folded.value) {
-            KeywordDescription()
-        }
     }
-
+    Divider()
 }
 
 @Composable
 fun KeywordDescription() {
-    Column(
-        modifier = Modifier.padding(5.dp)
-    ) {
-        Row(){
-            Image(
-                painter = rememberImagePainter(data = "https://cloudfour.com/examples/img-currentsrc/images/kitten-large.png"),
-                contentDescription = ""
-            )
-            Image(
-                painter = rememberImagePainter(data = "https://i.stack.imgur.com/aQZM2.png"),
-                contentDescription = ""
-            )
-        }
+//    Column(
+//        modifier = Modifier.padding(5.dp)
+//    ) {
+//        Row(){
+//            Image(
+//                painter = rememberImagePainter(data = "https://cloudfour.com/examples/img-currentsrc/images/kitten-large.png"),
+//                contentDescription = ""
+//            )
+//            Image(
+//                painter = rememberImagePainter(data = "https://i.stack.imgur.com/aQZM2.png"),
+//                contentDescription = ""
+//            )
+//        }
 
-        Text("description")
-    }
+//    }
 }
