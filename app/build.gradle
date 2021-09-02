@@ -80,6 +80,14 @@ dependencies {
 
     implementation "dev.chrisbanes.accompanist:accompanist-glide:0.4.2"
 
+    // pager
+    def pager_version = "0.17.0"
+    implementation "com.google.accompanist:accompanist-pager:$pager_version"
+
+    // If using indicators, also depend on
+    implementation "com.google.accompanist:accompanist-pager-indicators:$pager_version"
+
+
     //Room
     def room_version = "2.3.0"
 

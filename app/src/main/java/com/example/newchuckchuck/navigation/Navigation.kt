@@ -10,7 +10,9 @@ import com.example.newchuckchuck.screens.NoteScreen
 import com.example.newchuckchuck.screens.home.HomeScreen
 import com.example.newchuckchuck.screens.home.ListScreen
 import com.example.newchuckchuck.screens.settings.SettingsScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @Composable
 fun Navigation(navHostController: NavHostController) {
     NavHost(navController = navHostController, startDestination = "home") {
