@@ -1,95 +1,132 @@
 package com.example.newchuckchuck.screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.material.icons.sharp.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-
+import com.example.newchuckchuck.R
+import com.example.newchuckchuck.navigation.BottomNavigationBar
 
 @Composable
-fun NoteScreen(noteId: Int?, navController: NavHostController) {
-    Scaffold(topBar = {
-        TopAppBar(
-            title = { Text("프로야구") },
-            backgroundColor = Color.Transparent,
-            navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
-                        contentDescription = "navigateback"
-                    )
-                }
-            },
-            elevation = 0.dp,
-            actions = {
-                // RowScope here, so these icons will be placed horizontally
-                IconButton(onClick = { /* doSomething() */ }) {
-                    Icon(Icons.Outlined.Search, contentDescription = "Localized description")
-                }
-                val expanded = remember {
-                    mutableStateOf(false)
-                }
-                val selectedSorting = remember {
-                    mutableStateOf("latest")
-                }
-                IconButton(onClick = { expanded.value = true }) {
+fun NoteScreen(
+    noteId: Int?,
+    navController: NavHostController,
+    navigateToImageScreen: (fileName: String) -> Unit,
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("프로야구") },
+                backgroundColor = Color.Transparent,
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowBack,
+                            contentDescription = "navigateback"
+                        )
+                    }
+                },
+                elevation = 0.dp,
+                actions = {
+                    // RowScope here, so these icons will be placed horizontally
+                    IconButton(onClick = { /* doSomething() */ }) {
+                        Icon(Icons.Outlined.Search, contentDescription = "Localized description")
+                    }
+                    val expanded = remember {
+                        mutableStateOf(false)
+                    }
+                    val selectedSorting = remember {
+                        mutableStateOf("latest")
+                    }
+                    IconButton(onClick = { expanded.value = true }) {
 
-                    Icon(Icons.Outlined.Sort, contentDescription = "Localized description")
-                    DropdownMenu(
-                        expanded = expanded.value,
-                        onDismissRequest = { expanded.value = false }) {
-                        DropdownMenuItem(onClick = { selectedSorting.value = "latest" }) {
-                            if (selectedSorting.value == "latest") {
-                                Icon(imageVector = Icons.Outlined.Check, contentDescription = "")
+                        Icon(Icons.Outlined.Sort, contentDescription = "Localized description")
+                        DropdownMenu(
+                            expanded = expanded.value,
+                            onDismissRequest = { expanded.value = false }) {
+                            DropdownMenuItem(onClick = { selectedSorting.value = "latest" }) {
+                                if (selectedSorting.value == "latest") {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Check,
+                                        contentDescription = ""
+                                    )
+                                }
+                                Text("최근 수정")
                             }
-                            Text("최근 수정")
-                        }
-                        DropdownMenuItem(onClick = { selectedSorting.value = "new" }) {
-                            if (selectedSorting.value == "new") {
-                                Icon(imageVector = Icons.Outlined.Check, contentDescription = "")
+                            DropdownMenuItem(onClick = { selectedSorting.value = "new" }) {
+                                if (selectedSorting.value == "new") {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Check,
+                                        contentDescription = ""
+                                    )
+                                }
+                                Text("최신 생성")
                             }
-                            Text("최신 생성")
-                        }
-                        DropdownMenuItem(onClick = { selectedSorting.value = "old" }) {
-                            if (selectedSorting.value == "old") {
-                                Icon(imageVector = Icons.Outlined.Check, contentDescription = "")
+                            DropdownMenuItem(onClick = { selectedSorting.value = "old" }) {
+                                if (selectedSorting.value == "old") {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Check,
+                                        contentDescription = ""
+                                    )
+                                }
+                                Text("오래된 생성")
                             }
-                            Text("오래된 생성")
-                        }
-                        DropdownMenuItem(onClick = { selectedSorting.value = "ganada" }) {
-                            if (selectedSorting.value == "ganada") {
-                                Icon(imageVector = Icons.Outlined.Check, contentDescription = "")
+                            DropdownMenuItem(onClick = { selectedSorting.value = "ganada" }) {
+                                if (selectedSorting.value == "ganada") {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Check,
+                                        contentDescription = ""
+                                    )
+                                }
+                                Text("가나다")
                             }
-                            Text("가나다")
                         }
                     }
                 }
+            )
+        }
+    ) {
+        LazyColumn {
+            item {
+                PageItem(navigateToImageScreen = navigateToImageScreen)
             }
-        )
-    }) {
-        Column {
-            PageItem()
+            item {
+                PageItem(navigateToImageScreen = navigateToImageScreen)
+            }
+            item {
+                PageItem(navigateToImageScreen = navigateToImageScreen)
+            }
+            item {
+                PageItem(navigateToImageScreen = navigateToImageScreen)
+            }
+            item {
+                PageItem(navigateToImageScreen = navigateToImageScreen)
+            }
+            item {
+                Spacer(modifier = Modifier.height(80.dp))
+            }
         }
     }
 }
 
 @Composable
-fun PageItem() {
+fun PageItem(navigateToImageScreen: (fileName: String) -> Unit) {
     Card(
         modifier = Modifier
             .padding(vertical = 5.dp, horizontal = 10.dp),
@@ -101,12 +138,10 @@ fun PageItem() {
                 .padding(10.dp)
         ) {
             PageTitle(title = "210831")
-            PageKeywordItem(1)
-            PageKeywordItem(0)
-            PageKeywordItem(0)
-            PageKeywordItem(2)
-            PageKeywordItem(3)
-            PageKeywordItem(0)
+
+            PageKeywordItem(navigateToImageScreen = navigateToImageScreen)
+
+            PageKeywordItem(navigateToImageScreen = navigateToImageScreen)
         }
 
     }
@@ -125,7 +160,7 @@ fun PageTitle(title: String) {
                 imageVector = Icons.Default.Label,
                 tint = Color.DarkGray,
                 contentDescription = "",
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.width(20.dp)
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
@@ -140,7 +175,7 @@ fun PageTitle(title: String) {
 }
 
 @Composable
-fun PageKeywordItem(imgCount: Int) {
+fun PageKeywordItem(navigateToImageScreen: (fileName: String) -> Unit) {
 //    val folded = remember {
 //        mutableStateOf(true)
 //    }
@@ -173,7 +208,7 @@ fun PageKeywordItem(imgCount: Int) {
     Row(modifier = Modifier.padding(5.dp)) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(if (imgCount > 0) 0.8f else 1f)
+                .fillMaxWidth()
                 .clickable {
 
                 }
@@ -183,41 +218,25 @@ fun PageKeywordItem(imgCount: Int) {
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.height(10.dp))
+            ClickableImage(navigateToImageScreen = navigateToImageScreen)
+            Spacer(modifier = Modifier.height(5.dp))
             Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
-        }
-        if (imgCount > 0) {
-            IconButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Top)
-            ) {
-                Icon(
-                    imageVector = Icons.Sharp.Image,
-                    contentDescription = "",
-                    tint = Color.DarkGray,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+            Spacer(modifier = Modifier.height(5.dp))
         }
     }
     Divider()
 }
 
 @Composable
-fun KeywordDescription() {
-//    Column(
-//        modifier = Modifier.padding(5.dp)
-//    ) {
-//        Row(){
-//            Image(
-//                painter = rememberImagePainter(data = "https://cloudfour.com/examples/img-currentsrc/images/kitten-large.png"),
-//                contentDescription = ""
-//            )
-//            Image(
-//                painter = rememberImagePainter(data = "https://i.stack.imgur.com/aQZM2.png"),
-//                contentDescription = ""
-//            )
-//        }
+fun ClickableImage(navigateToImageScreen: (fileName: String) -> Unit) {
+    Image(
+        painter = painterResource(id = R.drawable.cat),
+        contentDescription = "",
+        modifier = Modifier.clickable {
+            navigateToImageScreen("aaaa")
+        }
+    )
 
-//    }
 }
+

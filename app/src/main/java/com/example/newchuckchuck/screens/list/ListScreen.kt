@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.newchuckchuck.navigation.BottomNavigationBar
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -78,7 +79,9 @@ fun ListScreen(navController: NavHostController) {
                 }
             }
         )
-    }) {
+    },
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
         LazyColumn {
             item {
                 NoteListItem(onClick = { noteId: Int -> navController.navigate("note/${noteId}") })

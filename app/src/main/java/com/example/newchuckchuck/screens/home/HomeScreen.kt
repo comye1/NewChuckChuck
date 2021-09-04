@@ -1,8 +1,6 @@
 package com.example.newchuckchuck.screens.home
 
-import android.widget.Space
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,8 +10,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.filled.Label
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -22,46 +20,57 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.example.newchuckchuck.data.Note
+import androidx.navigation.NavHostController
 import com.example.newchuckchuck.getDateString
+import com.example.newchuckchuck.navigation.BottomNavigationBar
 import com.example.newchuckchuck.ui.theme.DeepGreen
-import com.example.newchuckchuck.ui.theme.LightGreen
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
-fun HomeScreen() {
-    // todo : 태블릿 위한 레이아웃 어떻게 ??
-    Surface(color = MaterialTheme.colors.surface) {
+fun HomeScreen(navController: NavHostController) {
+    Scaffold(topBar = {
+        TopAppBar(
+            title = {
+                Column() {
+                    Text(text = "Home screen", style = MaterialTheme.typography.h5)
+                    Text(text = getDateString(), style = MaterialTheme.typography.body2)
+                }
+            },
+            backgroundColor = Color.White,
+            elevation = 5.dp
+        )
+    },
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
 
-        Column() {
-            Text(text = "Home screen 뭐라고 쓸까~~", style = MaterialTheme.typography.h5)
-            Text(text = getDateString(), style = MaterialTheme.typography.body2)
-            Spacer(modifier = Modifier.height(10.dp))
-            LazyColumn() {
-                item {
-                    NoteItem()
-                }
-                item {
-                    NoteItem()
-                }
-                item {
-                    NoteItem()
-                }
-                item {
-                    NoteItem()
-                }
-                item {
-                    NoteItem()
-                }
-                item {
-                    NoteItem()
-                }
-                item {
-                    Spacer(modifier = Modifier.height(40.dp))
-                }
+        LazyColumn() {
+            item {
+                NoteItem()
+            }
+            item {
+                NoteItem()
+            }
+            item {
+                NoteItem()
+            }
+            item {
+                NoteItem()
+            }
+            item {
+                NoteItem()
+            }
+            item {
+                NoteItem()
+            }
+            item {
+                Spacer(modifier = Modifier.height(40.dp))
             }
         }
     }
+
+
+    // todo : 태블릿 위한 레이아웃 어떻게 ??
+
 
 }
 
@@ -146,7 +155,7 @@ fun NoteItem() {
 //                        unfocusedIndicatorColor = Color.White,
 //                        disabledIndicatorColor = Color.Transparent
                     ),
-                shape = CircleShape,
+                    shape = CircleShape,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
@@ -200,12 +209,4 @@ fun KeyWord(text: String) {
         )
         Spacer(modifier = Modifier.width(5.dp))
     }
-}
-
-@Composable
-fun NoteItem(
-    note: Note,
-    folded: Boolean = true
-) {
-
 }

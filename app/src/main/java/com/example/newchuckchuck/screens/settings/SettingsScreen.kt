@@ -13,14 +13,26 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.newchuckchuck.navigation.BottomNavigationBar
 
 @Composable
-fun SettingsScreen() {
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text(text = "설정", style = MaterialTheme.typography.h5)
-        Spacer(modifier = Modifier.height(10.dp))
-        TimeTableSection()
+fun SettingsScreen(navController: NavHostController) {
+    Scaffold(topBar = {
+        TopAppBar(
+            title = { Text(text = "설정", style = MaterialTheme.typography.h5) },
+            backgroundColor = Color.White,
+            elevation = 5.dp
+        )
+    },
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text(text = "설정", style = MaterialTheme.typography.h5)
+            Spacer(modifier = Modifier.height(10.dp))
+            TimeTableSection()
 
+        }
     }
 }
 
@@ -99,7 +111,7 @@ fun TimeTableDialog(
     setSubjectName: (String) -> Unit
 ) {
     AlertDialog(
-        onDismissRequest ={closeDialog()},
+        onDismissRequest = { closeDialog() },
         title = {
             Text(text = "수정")
         },
