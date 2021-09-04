@@ -16,8 +16,6 @@ interface NoteDao {
 
     @Insert suspend fun insertKeyword(keyword: Keyword)
 
-    @Insert suspend fun insertImage(image: KeywordImage)
-
     //Update
     @Update suspend fun updateNote(note: Note)
 
@@ -32,8 +30,6 @@ interface NoteDao {
 
     @Delete suspend fun deleteKeyword(keyword: Keyword)
 
-    @Delete suspend fun deleteKeywordImage(image: KeywordImage)
-
     //Clear
     @Query("DELETE FROM note")
     fun clearNotes()
@@ -45,7 +41,5 @@ interface NoteDao {
     @Query("SELECT * FROM page where pageId = :pageId")
     suspend fun getPageWithKeywords(pageId: Int): List<PageWithKeywords>
 
-    @Query("SELECT * FROM keyword where keywordId =:keywordId")
-    suspend fun getKeywordWithImages(keywordId: Int): List<KeywordWithImages>
     
 }

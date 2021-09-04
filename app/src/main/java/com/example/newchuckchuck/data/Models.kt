@@ -34,7 +34,7 @@ data class Keyword(
     val ownerNoteId: Int?,
     val word: String?,
     val description: String?,
-    val imgCount: Int = 0
+    val imgName: String?
 )
 
 data class PageWithKeywords(
@@ -44,18 +44,4 @@ data class PageWithKeywords(
         entityColumn = "keywordId"
     )
     val keywords: List<Keyword?>
-)
-
-data class KeywordImage(
-    @PrimaryKey val imgNameId: Int? = 0,
-    val ownerKeywordId: Int?
-)
-
-data class KeywordWithImages(
-    @Embedded val keyword:Keyword?,
-    @Relation(
-        parentColumn = "keywordId",
-        entityColumn = "imgNameId"
-    )
-    val keywordImages: List<KeywordImage?>
 )
