@@ -22,17 +22,10 @@ fun SettingsScreen(navController: NavHostController) {
         TopAppBar(
             title = { Text(text = "설정", style = MaterialTheme.typography.h5) },
             backgroundColor = Color.White,
-            elevation = 5.dp
+            elevation = 0.dp
         )
-    },
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(text = "설정", style = MaterialTheme.typography.h5)
-            Spacer(modifier = Modifier.height(10.dp))
+    }) {
             TimeTableSection()
-
-        }
     }
 }
 
@@ -43,6 +36,7 @@ fun TimeTableSection() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 20.dp)
             .border(
                 width = 1.dp,
                 color = Color.LightGray,

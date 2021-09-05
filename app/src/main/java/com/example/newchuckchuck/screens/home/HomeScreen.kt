@@ -37,11 +37,9 @@ fun HomeScreen(navController: NavHostController) {
                 }
             },
             backgroundColor = Color.White,
-            elevation = 5.dp
+            elevation = 0.dp
         )
-    },
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) {
+    }) {
 
         LazyColumn() {
             item {
@@ -63,7 +61,7 @@ fun HomeScreen(navController: NavHostController) {
                 NoteItem()
             }
             item {
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(60.dp))
             }
         }
     }

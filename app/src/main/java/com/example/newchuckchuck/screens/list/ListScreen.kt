@@ -79,9 +79,7 @@ fun ListScreen(navController: NavHostController) {
                 }
             }
         )
-    },
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) {
+    }) {
         LazyColumn {
             item {
                 NoteListItem(onClick = { noteId: Int -> navController.navigate("note/${noteId}") })
