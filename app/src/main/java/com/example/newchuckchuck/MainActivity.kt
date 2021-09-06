@@ -3,6 +3,7 @@ package com.example.newchuckchuck
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
@@ -31,19 +32,29 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        val bmp = BitmapFactory.decodeResource(resources, R.drawable.cat)
-        savePhotoToInternalStorage("sampleImage", bmp)
+//        val bmp = BitmapFactory.decodeResource(resources, R.drawable.cat)
+//        savePhotoToInternalStorage("sampleImage", bmp)
+        deletePhotoFromInternalStorage("sampleImage.jpg")
     }
 
     fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
         return try {
             openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
-                if(!bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream)) {
+                if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream)) {
                     throw IOException("Couldn't save bitmap.")
                 }
             }
             true
-        } catch(e: IOException) {
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    fun deletePhotoFromInternalStorage(filename: String): Boolean {
+        return try {
+            deleteFile(filename)
+        } catch (e: Exception) {
             e.printStackTrace()
             false
         }
