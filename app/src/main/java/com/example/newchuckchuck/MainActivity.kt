@@ -32,15 +32,15 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-//        val bmp = BitmapFactory.decodeResource(resources, R.drawable.cat)
-//        savePhotoToInternalStorage("sampleImage", bmp)
-        deletePhotoFromInternalStorage("sampleImage.jpg")
+        val bmp = BitmapFactory.decodeResource(resources, R.drawable.cat)
+        savePhotoToInternalStorage("sampleImage5", bmp)
+//        deletePhotoFromInternalStorage("sampleImage.jpg")
     }
 
     fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
         return try {
             openFileOutput("$filename.jpg", MODE_PRIVATE).use { stream ->
-                if (!bmp.compress(Bitmap.CompressFormat.JPEG, 95, stream)) {
+                if (!bmp.compress(Bitmap.CompressFormat.JPEG, 30, stream)) {
                     throw IOException("Couldn't save bitmap.")
                 }
             }

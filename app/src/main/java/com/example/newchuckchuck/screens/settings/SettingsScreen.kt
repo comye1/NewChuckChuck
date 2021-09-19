@@ -20,7 +20,7 @@ import com.example.newchuckchuck.navigation.BottomNavigationBar
 fun SettingsScreen(navController: NavHostController) {
     Scaffold(topBar = {
         TopAppBar(
-            title = { Text(text = "설정", style = MaterialTheme.typography.h5) },
+            title = { Text(text = "설정") },
             backgroundColor = Color.White,
             elevation = 0.dp
         )

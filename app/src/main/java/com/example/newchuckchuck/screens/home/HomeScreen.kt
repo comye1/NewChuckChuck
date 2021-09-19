@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.newchuckchuck.getDateString
-import com.example.newchuckchuck.navigation.BottomNavigationBar
 import com.example.newchuckchuck.ui.theme.DeepGreen
 import com.google.accompanist.flowlayout.FlowRow
 
@@ -31,9 +30,13 @@ fun HomeScreen(navController: NavHostController) {
     Scaffold(topBar = {
         TopAppBar(
             title = {
-                Column() {
-                    Text(text = "Home screen", style = MaterialTheme.typography.h5)
-                    Text(text = getDateString(), style = MaterialTheme.typography.body2)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "바로 기록하기")
+                    Text(text = getDateString(), style = MaterialTheme.typography.body2, modifier = Modifier.padding(end = 8.dp))
                 }
             },
             backgroundColor = Color.White,
@@ -41,24 +44,14 @@ fun HomeScreen(navController: NavHostController) {
         )
     }) {
 
-        LazyColumn() {
-            item {
-                NoteItem()
-            }
-            item {
-                NoteItem()
-            }
-            item {
-                NoteItem()
-            }
-            item {
-                NoteItem()
-            }
-            item {
-                NoteItem()
-            }
-            item {
-                NoteItem()
+        LazyColumn(modifier = Modifier.padding(8.dp)) {
+            repeat(10) {
+                item {
+                    NoteItem()
+                }
+                item {
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
             }
             item {
                 Spacer(modifier = Modifier.height(60.dp))
@@ -84,14 +77,13 @@ fun NoteItem() {
     }
 
     Card(
-        modifier = Modifier.padding(10.dp),
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(width = 3.dp, color = Color.LightGray)
+        border = BorderStroke(width = 2.dp, color = Color.LightGray)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
+                .padding(8.dp)
 //            .background(color = MaterialTheme.colors.surface)
         ) {
             Row(
@@ -196,15 +188,15 @@ fun KeyWord(text: String) {
         verticalAlignment = CenterVertically,
         modifier = Modifier
 //                .background(color = Color.LightGray)
-            .padding(vertical = 5.dp)
+            .padding(vertical = 4.dp)
 
     ) {
         Text(
             text = text,
             modifier = Modifier
                 .border(width = 1.dp, color = DeepGreen, shape = CircleShape)
-                .padding(vertical = 5.dp, horizontal = 10.dp)
+                .padding(vertical = 4.dp, horizontal = 8.dp)
         )
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(4.dp))
     }
 }
