@@ -101,7 +101,7 @@ fun NoteListItem(onClick: (Int) -> Unit) {
                 onClick(0)
             },
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(width = 3.dp, color = Color.LightGray),
+        border = BorderStroke(width = 2.dp, color = Color.LightGray),
     ) {
 
         Row(

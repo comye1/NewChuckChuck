@@ -10,8 +10,11 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Label
-import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.AddAPhoto
+import androidx.compose.material.icons.outlined.AddBox
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -31,16 +34,20 @@ fun HomeScreen(navController: NavHostController) {
         TopAppBar(
             title = {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "바로 기록하기")
-                    Text(text = getDateString(), style = MaterialTheme.typography.body2, modifier = Modifier.padding(end = 8.dp))
+                    Text(
+                        text = getDateString(),
+                        style = MaterialTheme.typography.body2,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
                 }
             },
             backgroundColor = Color.White,
-            elevation = 0.dp
+            elevation = 0.dp,
         )
     }) {
 
@@ -50,7 +57,7 @@ fun HomeScreen(navController: NavHostController) {
                     NoteItem()
                 }
                 item {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
             item {
@@ -76,111 +83,133 @@ fun NoteItem() {
         mutableStateListOf("키움히어로즈", "기아", "삼성", "롯데")
     }
 
-    Card(
-        shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(width = 2.dp, color = Color.LightGray)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                BorderStroke(
+                    width = 2.dp,
+                    color = Color.LightGray
+                ),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .padding(vertical = 8.dp, horizontal = 12.dp),
+//                .border(width = 3.dp, Color.LightGray)
+//                .padding(vertical = 8.dp, horizontal = 12.dp)
 //            .background(color = MaterialTheme.colors.surface)
+    ) {
+        Row(
+            modifier = Modifier
+                .wrapContentHeight(align = CenterVertically)
         ) {
-            Row(
-                modifier = Modifier
-                    .wrapContentHeight(align = CenterVertically)
-            ) {
 //                Icon(imageVector = Icons.Outlined.Notes, contentDescription = "", tint = DeepGreen)
 //                Spacer(modifier = Modifier.width(5.dp))
-                Text(
-                    text = "프로야구",
-                    style = MaterialTheme.typography.h6,
-                    fontWeight = FontWeight.ExtraBold,
-//                    color = DeepGreen
-                )
+            Text(
+                text = "프로야구",
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.DarkGray
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.Label,
+                tint = Color.DarkGray,
+                contentDescription = "",
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = "소제목입니다 키움 너무못해",
+                style = MaterialTheme.typography.subtitle1,
+                color = Color.DarkGray
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        FlowRow(
+            modifier = Modifier
+                .wrapContentHeight()
+        ) {
+            keyWords.forEach {
+                KeyWord(text = it)
             }
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Label,
-                    tint = Color.DarkGray,
-                    contentDescription = "",
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(5.dp))
-                Text(
-                    text = "소제목입니다 키움 너무못해",
-                    style = MaterialTheme.typography.subtitle1
-                )
-            }
-
-            FlowRow(
-                modifier = Modifier
-                    .wrapContentHeight()
-            ) {
-                keyWords.forEach {
-                    KeyWord(text = it)
-                }
-            }
-            Row(
-                verticalAlignment = CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp)
-            ) {
-                OutlinedTextField(
-                    value = newText,
-                    onValueChange = { newText = it },
-                    placeholder = { Text(text = "키워드") },
-                    textStyle = MaterialTheme.typography.body1,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = DeepGreen,
-                        unfocusedBorderColor = Color.LightGray,
-
-                        cursorColor = DeepGreen,
-                        backgroundColor = Color.White,
-//                        focusedIndicatorColor = Color.Transparent,
-//                        unfocusedIndicatorColor = Color.White,
-//                        disabledIndicatorColor = Color.Transparent
-                    ),
-                    shape = CircleShape,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyWords.add(newText)
-                            newText = ""
-                        }
-                    )
-                )
-//            Spacer(modifier = Modifier.width(10.dp))
-                IconButton(
-                    onClick = {
-                        // 뷰모델 addNewKeyword 호출
+        }
+        Row(
+            verticalAlignment = CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            TextField(
+                value = newText,
+                onValueChange = { newText = it },
+                placeholder = { Text(text = "키워드") },
+                textStyle = MaterialTheme.typography.body1,
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = DeepGreen,
+                    unfocusedIndicatorColor = Color.LightGray,
+                    cursorColor = DeepGreen,
+                    backgroundColor = Color.Transparent
+                ),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
                         keyWords.add(newText)
                         newText = ""
-                        //todo: 유효성 검증
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Add,
-                        contentDescription = "add",
-                        modifier = Modifier
-                            .size(50.dp)
-                            .weight(1f),
-                        tint = DeepGreen
-                    )
-                }
+                    }
+                ),
+                modifier = Modifier.weight(9f)
+            )
+            IconButton(
+                onClick = {
+                    // 뷰모델 addNewKeyword 호출
+                    keyWords.add(newText)
+                    newText = ""
+                    //todo: 유효성 검증
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .wrapContentHeight(),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Image,
+                    contentDescription = "add",
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    tint = Color.Gray
+                )
+            }
+            Spacer(modifier = Modifier.width(4.dp))
+            IconButton(
+                onClick = {
+                    // 뷰모델 addNewKeyword 호출
+                    keyWords.add(newText)
+                    newText = ""
+                    //todo: 유효성 검증
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .wrapContentHeight(),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.AddBox,
+                    contentDescription = "add",
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    tint = Color.Gray
+                )
             }
         }
     }
-
 }
+
 
 @Composable
 fun KeyWord(text: String) {
@@ -194,8 +223,9 @@ fun KeyWord(text: String) {
         Text(
             text = text,
             modifier = Modifier
-                .border(width = 1.dp, color = DeepGreen, shape = CircleShape)
-                .padding(vertical = 4.dp, horizontal = 8.dp)
+                .border(width = 1.5.dp, color = Color.LightGray, shape = CircleShape)
+                .padding(vertical = 6.dp, horizontal = 8.dp),
+            color = Color.DarkGray
         )
         Spacer(modifier = Modifier.width(4.dp))
     }

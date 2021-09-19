@@ -129,9 +129,9 @@ fun NoteScreen(
 fun PageItem(navigateToImageScreen: (fileName: String) -> Unit) {
     Card(
         modifier = Modifier
-            .padding(vertical = 5.dp, horizontal = 10.dp),
+            .padding(vertical = 8.dp, horizontal = 12.dp),
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(width = 3.dp, color = Color.LightGray),
+        border = BorderStroke(width = 2.dp, color = Color.LightGray),
     ) {
         Column(
             modifier = Modifier
