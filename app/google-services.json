@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "307516624901",
+    "project_id": "awesome-chuck",
+    "storage_bucket": "awesome-chuck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307516624901:android:7b23783572cc9ed3f40c6c",
+        "android_client_info": {
+          "package_name": "com.comye1.keywordnote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307516624901-0hipm8f35bjqmb07ib1oo3493okfvo0c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comye1.keywordnote",
+            "certificate_hash": "dd8ff660dbe42e3c4b37fd9c18511ae0d33f774b"
+          }
+        },
+        {
+          "client_id": "307516624901-h2d8h0bg613ojj32lll9oi1u82nbdv2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF7xSQVt1SXXUNgcIZf1lsBTenQZ4t_zU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307516624901-h2d8h0bg613ojj32lll9oi1u82nbdv2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
